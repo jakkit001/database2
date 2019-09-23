@@ -1,0 +1,54 @@
+﻿@model List<book>
+@{
+    ViewData["Title"] = "รายการหนังสือ";
+}
+
+    <h1>@ViewData["Title"]</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+
+<a asp-controller="book" asp-action="addbook" class="btn btn-success">เพิ่มหนังสือใหม่</a>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => m[0].id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m[0].name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m[0].price)
+        </th>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <th>
+                (คำสั่ง)
+            </th>
+        }
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(m => item.id)
+    </td>
+    <td>
+        @Html.DisplayFor(m => item.name)
+    </td>
+    <td>
+        @Html.DisplayFor(m => item.price)
+    </td>
+    @if (User.Identity.IsAuthenticated)
+    {
+<td>
+    <a asp-controller="book" asp-action="bookedit" asp-route-id="@item.id">เเก้ไข</a>
+    <a asp-controller="book" asp-action="bookdelete" asp-route-id="@item.id">ลบทิ้ง</a>
+</td>
+    }
+</tr>
+    }
+    </table>
+
